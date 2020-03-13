@@ -50,13 +50,26 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   server.begin();
-  //toUno.begin(9600);
   fromUno.begin(115200);
   pinMode(D7,INPUT);
   pinMode(D8,OUTPUT);
 }
-
+String msg="";
 void loop(){
+
+if(fromUno.available())
+  {
+  char ch=fromUno.read();
+  if(ch=='/'){
+    Serial.println(msg);
+    header += msg;
+    msg="";
+  }
+  else{
+    msg+=ch;
+  }
+  }
+
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -69,7 +82,7 @@ void loop(){
       if (client.available()) {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
         Serial.write(c);                    // print it out the serial monitor
-        header += c;
+//        header += c;
         if (c == '\n') {                    // if the byte is a newline character
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
@@ -113,24 +126,7 @@ void loop(){
             
             // Web Page Heading
             client.println("<body><h1>ESP8266 Web Server</h1>");
-            
-            // Display current state, and ON/OFF buttons for GPIO 5  
-            client.println("<p>GPIO 5 - State " + output5State + "</p>");
-            // If the output5State is off, it displays the ON button       
-            if (output5State=="off") {
-              client.println("<p><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>");
-            } else {
-              client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
-            } 
-               
-            // Display current state, and ON/OFF buttons for GPIO 4  
-            client.println("<p>GPIO 4 - State " + output4State + "</p>");
-            // If the output4State is off, it displays the ON button       
-            if (output4State=="off") {
-              client.println("<p><a href=\"/4/on\"><button class=\"button\">ON</button></a></p>");
-            } else {
-              client.println("<p><a href=\"/4/off\"><button class=\"button button2\">OFF</button></a></p>");
-            }
+            client.println(header);
             client.println("</body></html>");
             
             // The HTTP response ends with another blank line
@@ -152,9 +148,5 @@ void loop(){
     Serial.println("Client disconnected.");
     Serial.println("");
   }
-if(fromUno.available())
-{
-  char ch=fromUno.read();
-  Serial.print(ch);
-}
+
 }
