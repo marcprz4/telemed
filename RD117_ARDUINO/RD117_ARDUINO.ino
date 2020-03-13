@@ -92,10 +92,10 @@ void loop() {
       un_min=aun_red_buffer[i];  //update signal min
     if(un_max<aun_red_buffer[i])
       un_max=aun_red_buffer[i];  //update signal max
-    Serial.print(F("red="));
-    Serial.print(aun_red_buffer[i], DEC);
-    Serial.print(F(", ir="));
-    Serial.println(aun_ir_buffer[i], DEC);
+//    Serial.print(F("red="));
+//    Serial.print(aun_red_buffer[i], DEC);
+//    Serial.print(F(", ir="));
+//    Serial.println(aun_ir_buffer[i], DEC);
   }
   un_prev_data=aun_red_buffer[i];
   //calculate heart rate and SpO2 after first 100 samples (first 4 seconds of samples)
@@ -165,24 +165,33 @@ void loop() {
 //      Serial.print(F(", ir="));
 //      Serial.print(aun_ir_buffer[i], DEC);
       
-      Serial.print(F(", HR="));
-      Serial.print(n_heart_rate, DEC);
-      
-      Serial.print(F(", HRvalid="));
-      Serial.print(ch_hr_valid, DEC);
-      
-      Serial.print(F(", SPO2="));
-      Serial.print(n_spo2, DEC);
+//      Serial.print(F("HR="));
+//      Serial.print(n_heart_rate, DEC);
+//      Serial.print(F(" te="));
+//      Serial.print(tempHr);
+//      
+////      Serial.print(F(", HRvalid="));
+////      Serial.print(ch_hr_valid, DEC);
+//      
+//      Serial.print(F(", SPO2="));
+//      Serial.print(n_spo2, DEC);
 
-      Serial.print(F(", SPO2Valid="));
-      Serial.println(ch_spo2_valid, DEC);
+//      Serial.print(F(", SPO2Valid="));
+//      Serial.println(ch_spo2_valid, DEC);
+
+
+///////////////
 
       if(ch_spo2_valid==1&&ch_hr_valid==1){
-        toESP.print(n_heart_rate, DEC);
-        toESP.print(":");
-        toESP.print(n_spo2, DEC);
-        toESP.print("/");
+      Serial.println("");
+      Serial.print("HR=");
+      Serial.print(n_heart_rate, DEC);
+      
+      Serial.print(", SPO2=");
+      Serial.print(n_spo2, DEC);
       }
+
+      //////////////////
     }
     maxim_heart_rate_and_oxygen_saturation(aun_ir_buffer, n_ir_buffer_length, aun_red_buffer, &n_spo2, &ch_spo2_valid, &n_heart_rate, &ch_hr_valid); 
   }
