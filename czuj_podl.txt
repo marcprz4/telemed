@@ -1,0 +1,5 @@
+gnd pom
+int zol
+scl nieb
+sda zol z ziel
+vin ziel
