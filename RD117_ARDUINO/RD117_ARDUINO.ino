@@ -29,11 +29,12 @@ int32_t n_heart_rate; //heart rate value
 int8_t  ch_hr_valid;  //indicator to show if the heart rate calculation is valid
 uint8_t uch_dummy;
 
-SoftwareSerial toESP(7, 8); //Rx, Tx
+SoftwareSerial SUART( 7, 8);
+
 
 // the setup routine runs once when you press reset:
 void setup() {
-
+SUART.begin(115200);   //to match with NodeMCU which prefers higher Bd to work
 #if defined(ARDUINO_AVR_LILYPAD_USB)    
   pinMode(13, OUTPUT);  //LED output pin on Lilypad
 #endif
@@ -67,7 +68,6 @@ void setup() {
   maxim_max30102_init();  //initialize the MAX30102
 
   Serial.begin(115200);
-  toESP.begin(115200);
 }
 
 // the loop routine runs over and over again forever:
@@ -183,12 +183,20 @@ void loop() {
 ///////////////
 
       if(ch_spo2_valid==1&&ch_hr_valid==1){
-      Serial.println("");
+        if(i>=99) {
+          Serial.println("");
       Serial.print("HR=");
       Serial.print(n_heart_rate, DEC);
       
       Serial.print(", SPO2=");
       Serial.print(n_spo2, DEC);
+
+      SUART.print(n_heart_rate, DEC);
+      SUART.print(":");
+      SUART.print(n_spo2, DEC);
+      SUART.print("/");
+      delay(1000);
+        }
       }
 
       //////////////////
