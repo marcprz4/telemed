@@ -42,31 +42,19 @@ void setup() {
   server.begin();
 }
 String msg="";
-String hr="";
-String so="";
+//String hr="";
+//String so="";
 void loop(){
   byte a=SUART.available();
 if(a != 0)
   {
     char ch=SUART.read();
     if(ch=='/'){
-      for(int i=0;i<msg.length();i++){
-        if(msg[i]==':'){
-          so+=msg[i+1];
-          so+=msg[i+2];
-          if(msg[i+1]=='1'&&msg[i+2]=='0'){
-            so+="0";
-          }
-          for(int j=0;j<i;j++){
-            hr+=msg[j];
-          }
-        }
-      }
+      data = msg;
       msg="";
-      data = hr+":"+so;
       Serial.println(data);
-      hr="";
-      so="";
+//      hr="";
+//      so="";
     } else {
       msg+=ch;
     }
