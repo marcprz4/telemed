@@ -54,6 +54,9 @@ if(a != 0)
         if(msg[i]==':'){
           so+=msg[i+1];
           so+=msg[i+2];
+          if(msg[i+1]=='1'&&msg[i+2]=='0'){
+            so+="0";
+          }
           for(int j=0;j<i;j++){
             hr+=msg[j];
           }
@@ -67,14 +70,14 @@ if(a != 0)
     } else {
       msg+=ch;
     }
-delay(1000);
+//delay(1000);
 
 }
   ///////////
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
-    Serial.println("New Client.");          // print a message out in the serial port
+//    Serial.println("New Client.");          // print a message out in the serial port
     String currentLine = "";                // make a String to hold incoming data from the client
     currentTime = millis();
     previousTime = currentTime;
@@ -83,7 +86,7 @@ delay(1000);
       if (client.available()) {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
         Serial.write(c);                    // print it out the serial monitor
-        header += c;
+//        header += c;
         if (c == '\n') {                    // if the byte is a newline character
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
@@ -128,6 +131,6 @@ delay(1000);
     header = "";
     // Close the connection
     client.stop();
-    Serial.println("Client disconnected.");
-    Serial.println("");
+//    Serial.println("Client disconnected.");
+//    Serial.println("");
   }}  

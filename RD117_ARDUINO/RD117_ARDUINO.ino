@@ -171,7 +171,6 @@ void loop() {
       SUART.print(":");
       SUART.print(n_spo2, DEC);
       SUART.print("/");
-      delay(2000);
         }
       }
 
