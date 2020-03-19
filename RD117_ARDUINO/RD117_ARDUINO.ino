@@ -51,20 +51,20 @@ SUART.begin(115200);   //to match with NodeMCU which prefers higher Bd to work
   pinMode(10, INPUT);  //pin D10 connects to the interrupt output pin of the MAX30102
   delay(1000);
   maxim_max30102_read_reg(REG_INTR_STATUS_1,&uch_dummy);  //Reads/clears the interrupt status register
-  while(Serial.available()==0)  //wait until user presses a key
-  {
-    Serial.write(27);       // ESC command
-    Serial.print(F("[2J"));    // clear screen command
-#if defined(ARDUINO_AVR_LILYPAD_USB)    
-    Serial.println(F("Lilypad"));
-#endif
-#if defined(ARDUINO_AVR_FLORA8)
-    Serial.println(F("Adafruit Flora"));
-#endif
-    Serial.println(F("Press any key to start conversion"));
-    delay(1000);
-  }
-  uch_dummy=Serial.read();
+//  while(Serial.available()==0)  //wait until user presses a key
+//  {
+//    Serial.write(27);       // ESC command
+//    Serial.print(F("[2J"));    // clear screen command
+//#if defined(ARDUINO_AVR_LILYPAD_USB)    
+//    Serial.println(F("Lilypad"));
+//#endif
+//#if defined(ARDUINO_AVR_FLORA8)
+//    Serial.println(F("Adafruit Flora"));
+//#endif
+//    Serial.println(F("Press any key to start conversion"));
+//    delay(1000);
+//  }
+//  uch_dummy=Serial.read();
   maxim_max30102_init();  //initialize the MAX30102
 
   Serial.begin(115200);
@@ -92,10 +92,6 @@ void loop() {
       un_min=aun_red_buffer[i];  //update signal min
     if(un_max<aun_red_buffer[i])
       un_max=aun_red_buffer[i];  //update signal max
-//    Serial.print(F("red="));
-//    Serial.print(aun_red_buffer[i], DEC);
-//    Serial.print(F(", ir="));
-//    Serial.println(aun_ir_buffer[i], DEC);
   }
   un_prev_data=aun_red_buffer[i];
   //calculate heart rate and SpO2 after first 100 samples (first 4 seconds of samples)
@@ -159,26 +155,6 @@ void loop() {
       LED.show();
 #endif
 
-      //send samples and calculation result to terminal program through UART
-//      Serial.print(F("red="));
-//      Serial.print(aun_red_buffer[i], DEC);
-//      Serial.print(F(", ir="));
-//      Serial.print(aun_ir_buffer[i], DEC);
-      
-//      Serial.print(F("HR="));
-//      Serial.print(n_heart_rate, DEC);
-//      Serial.print(F(" te="));
-//      Serial.print(tempHr);
-//      
-////      Serial.print(F(", HRvalid="));
-////      Serial.print(ch_hr_valid, DEC);
-//      
-//      Serial.print(F(", SPO2="));
-//      Serial.print(n_spo2, DEC);
-
-//      Serial.print(F(", SPO2Valid="));
-//      Serial.println(ch_spo2_valid, DEC);
-
 
 ///////////////
 
@@ -195,7 +171,7 @@ void loop() {
       SUART.print(":");
       SUART.print(n_spo2, DEC);
       SUART.print("/");
-      delay(1000);
+      delay(2000);
         }
       }
 

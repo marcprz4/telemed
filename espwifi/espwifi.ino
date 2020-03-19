@@ -95,24 +95,6 @@ delay(1000);
             client.println("Connection: close");
             client.println();
             
-            // turns the GPIOs on and off
-//            if (header.indexOf("GET /5/on") >= 0) {
-//              Serial.println("GPIO 5 on");
-//              output5State = "on";
-//              digitalWrite(output5, HIGH);
-//            } else if (header.indexOf("GET /5/off") >= 0) {
-//              Serial.println("GPIO 5 off");
-//              output5State = "off";
-//              digitalWrite(output5, LOW);
-//            } else if (header.indexOf("GET /4/on") >= 0) {
-//              Serial.println("GPIO 4 on");
-//              output4State = "on";
-//              digitalWrite(output4, HIGH);
-//            } else if (header.indexOf("GET /4/off") >= 0) {
-//              Serial.println("GPIO 4 off");
-//              output4State = "off";
-//              digitalWrite(output4, LOW);
-//            }
             
             // Display the HTML web page
             client.println("<!DOCTYPE html><html>");
@@ -126,7 +108,7 @@ delay(1000);
             client.println(".button2 {background-color: #77878A;}</style></head>");
             
             // Web Page Heading
-            client.println("<body><h1>ESP8266 Web Server</h1>");
+            client.println("<body>");
             client.println(data);
             client.println("</body></html>");
             
