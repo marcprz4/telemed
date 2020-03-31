@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <SoftwareSerial.h>
 // Replace with your network credentials
-const char* ssid     = "Dom";
-const char* password = "Wifi2004";
+const char* ssid     = "HUAWEI";
+const char* password = "wifi1997";
 String data="";
 SoftwareSerial SUART( D7, D8);
 
